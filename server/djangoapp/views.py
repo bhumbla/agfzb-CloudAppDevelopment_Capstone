@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, render, redirect, reverse
 # from .models import related models
 # from .restapis import related methods
 from django.contrib.auth import login, logout, authenticate
@@ -29,16 +29,54 @@ def contact(request):
     if request.method == "GET":
         return render(request, 'djangoapp/contact_us.html', context)
 # Create a `login_request` view to handle sign in request
-# def login_request(request):
+def login_request(request):
+    context = {}
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['psw']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+        return HttpResponseRedirect(reverse(viewname='djangoapp:index'))
+    else:
+        return redirect('djangoapp:index')
+
 # ...
 
 # Create a `logout_request` view to handle sign out request
-# def logout_request(request):
-# ...
+def logout_request(request):
+    # Get the user object based on session id in request
+    print("Log out the user `{}`".format(request.user.username))
+    # Logout user in the request
+    logout(request)
+    # Redirect user back to homepage
+    return redirect('djangoapp:index')
 
 # Create a `registration_request` view to handle sign up request
-# def registration_request(request):
-# ...
+def registration_request(request):
+    context = {}
+    if request.method == 'GET':
+        return render(request, 'djangoapp/registration.html', context)
+
+    elif request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['psw']
+        first_name = request.POST['firstname']
+        last_name = request.POST['lastname']
+        user_exist = False
+        try:
+            # Check if user already exists
+            User.objects.get(username=username)
+            user_exist = True
+        except:
+            # If not, simply log this is a new user
+            logger.debug("{} is new user".format(username))
+        if not user_exist:
+            user = User.objects.create(username=username, first_name=first_name, last_name=last_name, password=password)
+            login(request, user)
+            return HttpResponseRedirect(reverse(viewname='djangoapp:index'))
+        else:
+            return render(request, 'djangoapp/registration.html')
 
 # Update the `get_dealerships` view to render the index page with a list of dealerships
 def get_dealerships(request):
