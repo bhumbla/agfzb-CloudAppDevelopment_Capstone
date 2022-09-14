@@ -43,7 +43,25 @@
         </nav>
     </header>
     <!--Add a dealer table here -->
-
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">City</th>
+            <th scope="col">State</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for dealership in dealership_list %}
+          <tr>
+            <th scope="row">{{forloop.counter0}}</th>
+            <td>{{dealership.full_name}}</td>
+            <td>{{dealership.city}}</td>
+            <td>{{dealership.st}}</td>
+          </tr>
+        </tbody>
+      </table>
     <footer>
         <a href="about">About Us</a>
         <a href="contact">Contact Us</a>
