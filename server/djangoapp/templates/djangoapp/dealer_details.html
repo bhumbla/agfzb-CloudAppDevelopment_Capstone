@@ -2,17 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dealership Review</title>
+    <title>Dealership Details</title>
     {% load static %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 
-    <body>
+<body>
 
     <!--Add a nav bar here -->
-
+    {% include './navbar.html' %}
     <!-- Add reviews as cards -->
-
-    </body>
+    {% for review in review_list %}
+    <article class="card w-25">
+        <h5 class="card-header">Featured</h5>
+        <section class="card-body">
+            <h5 class="card-title">Review {{forloop.counter0}} 
+                {% if review.sentiment == "positive" %}
+                <span>&#x1F60D</span>
+                {% elif review.sentiment == "negative" %}
+                <span>&#x1F61E</span>
+                {% else %}
+                <span>&#x1F610</span>
+                {% endif %}
+            </h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{review.name}}</h6>
+            <p>{{review.review}}</p>
+        </section>
+    </article>
+    {% endfor %}
+</body>
 
 </html>
