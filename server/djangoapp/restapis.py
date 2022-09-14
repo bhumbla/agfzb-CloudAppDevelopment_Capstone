@@ -33,7 +33,7 @@ def get_dealers_from_cf(url, **kwargs):
     json_result = get_request(url)
     # - Parse JSON results into a CarDealer object list
     if json_result:
-        dealerships = json_result['rows']
+        dealerships = json_result
         for dealer in dealerships:
             dealer_details = dealer['doc']
             dealer_obj = CarDealer(
