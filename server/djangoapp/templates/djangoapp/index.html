@@ -54,12 +54,14 @@
         </thead>
         <tbody>
             {% for dealership in dealership_list %}
-          <tr>
-            <th scope="row">{{forloop.counter0}}</th>
-            <td>{{dealership.full_name}}</td>
-            <td>{{dealership.city}}</td>
-            <td>{{dealership.st}}</td>
-          </tr>
+            <tr>
+                <th scope="row">{{forloop.counter0}}</th>
+                <td>{{dealership.full_name}}</td>
+                <td>{{dealership.city}}</td>
+                <td>{{dealership.st}}</td>
+            </tr>
+            {% endfor %}
+          
         </tbody>
       </table>
     <footer>
