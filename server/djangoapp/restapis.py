@@ -1,9 +1,13 @@
 import requests
 import json
+import os
+from dotenv import load_dotenv
 from .models import CarDealer, DealerReview
 from ibm_watson import NaturalLanguageUnderstandingV1 
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator 
 from ibm_watson.natural_language_understanding_v1 import Features, SentimentOptions
+
+load_dotenv()
 
 # Create a `get_request` to make HTTP GET requests
 # e.g., response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
@@ -146,9 +150,9 @@ def get_dealer_by_state_from_cf(url, state):
 
 # Create an `analyze_review_sentiments` method to call Watson NLU and analyze text
 def analyze_review_sentiments(text):
-    url = "https://api.au-syd.natural-language-understanding.watson.cloud.ibm.com/instances/d71fa345-3dba-4c01-8bea-b7b106bd3b8e" 
+    url = os.getenv('IBM_WATSON_NLU_API_URL')
 
-    api_key = "hucY1ZR1dT8jUEgJTEd1zof-kekf0xV87_AP1-HI382B" 
+    api_key = os.getenv('IBM_WATSON_NLU_API_KEY')
 
     authenticator = IAMAuthenticator(api_key) 
 
