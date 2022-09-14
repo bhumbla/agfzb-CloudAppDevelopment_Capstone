@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect, reverse
 from .models import CarDealer, DealerReview
-from .restapis import get_dealers_from_cf, get_dealer_reviews_from_cf, get_dealer_by_id_from_cf
+from .restapis import get_dealers_from_cf, get_dealer_reviews_from_cf, get_dealer_by_id_from_cf, post_dealer_review
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from datetime import datetime
@@ -106,6 +106,19 @@ def get_dealer_details(request, dealer_id):
 # ...
 
 # Create a `add_review` view to submit a review
-# def add_review(request, dealer_id):
+def add_review(request, dealer_id):
+    context = {}
+    context['dealer_id'] = dealer_id
+    if request.method == "POST":
+        #dealer_id = request.POST["dealership"]
+        # Add new Review
+        review_url = "https://us-south.functions.appdomain.cloud/api/v1/web/Bhumbla_Coursera/dealership-package/post-review"
+        new_review= dict()
+        new_review['dealership']=dealer_id
+        new_review["time"] = datetime.utcnow().isoformat()
+        post_dealer_review(review_url, new_review)
+        return HttpResponseRedirect(reverse(viewname='djangoapp:index'))
+    else:
+        return render(request, 'djangoapp/add_review.html', context)
 # ...
 
