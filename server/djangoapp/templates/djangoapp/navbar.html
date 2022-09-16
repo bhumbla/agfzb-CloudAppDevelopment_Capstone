@@ -1,13 +1,13 @@
 <header>
     <nav class="navbar navbar-dark bg-dark">
       <div class="navbar-header">
-          <a class="navbar-brand" href="/djangoapp">Dealerships</a>
+          <a class="navbar-brand text-light" href="/djangoapp">Dealerships</a>
       </div>
       <ul class="nav navbar-nav navbar-right">
           {% if user.is_authenticated %}
           <li>
-              <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
-              <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
+              <a class="btn text-light" href="#">{{ user.first_name }} ({{ user.username }})</a>
+              <a class="btn text-danger" href="{% url 'djangoapp:logout' %}">Logout</a>
           </li>
           {% else %}
           <li>
@@ -17,7 +17,7 @@
                       <input type="text" class="form-control" placeholder="Username" name="username" >
                       <input type="password" class="form-control" placeholder="Password" name="psw" >
                       <button class="btn btn-primary" type="submit">Login</button>
-                      <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Sign Up</a>
+                      <a class="btn text-light" href="{% url 'djangoapp:registration' %}">Sign Up</a>
                   </div>
               </form>
           </li>

@@ -10,45 +10,55 @@
     <link href="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.css" rel="stylesheet">
     <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
-
+    <style>
+      .table-hover tbody tr:hover {
+        color: #3ecabf83;
+        background-color: rgba(0,0,0,.075);
+      }
+      a.text-info:hover {
+        color: #3ecabf83!important;
+      }
+    </style>
 </head>
 
 <body>
     <!--Add a nav bar here -->
     {% include './navbar.html' %}
     <!--Add a dealer table here -->
-    <table class="table" id="table" data-filter-control="true">
-        <thead>
-          <tr>
-            <th scope="col" data-field="id">ID</th>
-            <th scope="col" data-field="name">Dealer Name</th>
-            <th scope="col" data-field="city">City</th>
-            <th scope="col" data-field="address">Address</th>
-            <th scope="col" data-field="zip">Zip</th>
-            <th scope="col" data-field="st" data-filter-control="select">State</th>
-          </tr>
-        </thead>
-        <tbody>
-            {% for dealership in dealership_list %}
-            <tr>
-                <td>
-                  {{dealership.id}}
-                </td>
-                <td>
-                  <a href="{% url 'djangoapp:dealer_details' dealership.id %}">{{dealership.full_name}}</a>
-                </td>
-                <td>{{dealership.city}}</td>
-                <td>{{dealership.address}}</td>
-                <td>{{dealership.zip}}</td>
-                <td>{{dealership.st}}</td>
-            </tr>
-            {% endfor %}
-          
-        </tbody>
-      </table>
-    <footer>
-        <a href="about">About Us</a>
-        <a href="contact">Contact Us</a>
+    <main class="table-responsive" style="height: 88vh;">
+        <table class="table bg-dark text-light" id="table" data-filter-control="true">
+            <thead>
+              <tr>
+                <th scope="col" data-field="id">ID</th>
+                <th scope="col" data-field="name">Dealer Name</th>
+                <th scope="col" data-field="city">City</th>
+                <th scope="col" data-field="address">Address</th>
+                <th scope="col" data-field="zip">Zip</th>
+                <th scope="col" data-field="st" data-filter-control="select">State</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for dealership in dealership_list %}
+                <tr>
+                    <td>
+                      {{dealership.id}}
+                    </td>
+                    <td>
+                      <a href="{% url 'djangoapp:dealer_details' dealership.id %}" class="text-info">{{dealership.full_name}}</a>
+                    </td>
+                    <td>{{dealership.city}}</td>
+                    <td>{{dealership.address}}</td>
+                    <td>{{dealership.zip}}</td>
+                    <td>{{dealership.st}}</td>
+                </tr>
+                {% endfor %}
+              
+            </tbody>
+        </table>
+    </main>
+    <footer class="p-2 bg-dark">
+        <a class="btn text-light " href="about">About Us</a>
+        <a class="btn text-light " href="contact">Contact Us</a>
     </footer>
 
     <script>
