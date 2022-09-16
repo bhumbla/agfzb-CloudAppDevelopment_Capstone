@@ -13,7 +13,6 @@ load_dotenv()
 # e.g., response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
 #                                     auth=HTTPBasicAuth('apikey', api_key))
 def get_request(url, **kwargs):
-    print(kwargs)
     print("GET from {} ".format(url))
     try:
         # Call get method of requests library with URL and parameters
@@ -30,11 +29,10 @@ def get_request(url, **kwargs):
 # Create a `post_request` to make HTTP POST requests
 # e.g., response = requests.post(url, params=kwargs, json=payload)
 def post_request(url, payload, **kwargs):
-    print(kwargs)
     print("POST from {} ".format(url))
     try:
         # Call post method of requests library with URL and parameters
-        response = requests.post(url, params=kwargs, json=payload)
+        response = requests.post(url, json=payload, params=kwargs )
     except:
         # If any error occurs
         print("Network exception occurred")
@@ -94,10 +92,9 @@ def get_dealer_reviews_from_cf(url, dealerId):
     return results
 
 
-def post_dealer_review(url, **params):
+def post_dealer_review(url, payload, **params):
     # - Call get_request() with specified arguments
-    payload = params["payload"]
-    json_result = post_request(url,payload=payload, **params)
+    json_result = post_request(url, payload, **params)
     
     return json_result
 
@@ -159,8 +156,11 @@ def analyze_review_sentiments(text):
     natural_language_understanding = NaturalLanguageUnderstandingV1(version='2021-08-01',authenticator=authenticator) 
 
     natural_language_understanding.set_service_url(url) 
+    try:
+        response = natural_language_understanding.analyze( text=text ,features=Features(sentiment=SentimentOptions(targets=[text]))).get_result()
 
-    response = natural_language_understanding.analyze( text=text ,features=Features(sentiment=SentimentOptions(targets=[text]))).get_result() 
+    except:
+        return ('could not evaluate')
 
     label=json.dumps(response, indent=2) 
 
