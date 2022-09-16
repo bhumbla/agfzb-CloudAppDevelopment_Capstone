@@ -6,61 +6,32 @@
     {% load static %}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-    <body>
-        <header>
-            <nav class="navbar navbar-dark bg-dark">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="about">About Us</a>
-                </div>
-                <ul class="nav navbar-nav navbar-right">
-                    {% if user.is_authenticated %}
-                    <li>
-                        <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
-                        <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
-                    </li>
-                    {% else %}
-                    <li>
-                        <form class="form-inline" action="{% url 'djangoapp:login' %}" method="post">
-                            {% csrf_token %}
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Username" name="username" >
-                                <input type="password" class="form-control" placeholder="Password" name="psw" >
-                                <button class="btn btn-primary" type="submit">Login</button>
-                                <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Sign Up</a>
-                            </div>
-                        </form>
-                    </li>
-                    {% endif %}
-                </ul>
-            </nav>
-        </header>
-        <main>
-            <form action="{% url 'djangoapp:registration' %}" method="post">
-                <div class="container">
-                    <h1>Sign Up</h1>
-                    <hr>
-                    <p>
-                        <label for="username">User Name</label>
-                        <input type="text" id="username" name="username" placeholder="Enter User Name">
-                    </p>
-                    <p>
-                        <label for="firstname">First Name</label>
-                        <input type="text" id="firstname" name="firstname" placeholder="Enter First Name">
-                    </p>
-                    <p>
-                        <label for="lastname">User Name</label>
-                        <input type="text" id="lastname" name="lastname" placeholder="Enter Last Name">
-                    </p>
-                    <p>
-                        <label for="password">User Name</label>
-                        <input type="password" id="password" name="psw" placeholder="Enter Password">
-                    </p>
-                    <div>
-                        {% csrf_token %}
-                        <button class="btn btn-primary" type="submit">Sign Up</button>
-                    </div>
-                </div>
-            </form>
-        </main>
-    </body>
+<body>
+    {% include './navbar.html' %}
+    <header class="d-flex justify-content-between align-items-center p-2">
+        <h1>Sign Up</h1>
+    </header>
+    <main  class="container">
+        <form action="{% url 'djangoapp:registration' %}" method="post">
+            <section class="form-group">
+                <label for="username">User Name</label>
+                <input type="text" id="username" name="username" placeholder="Enter User Name" required>
+            </section>
+            <section class="form-group">
+                <label for="firstname">First Name</label>
+                <input type="text" id="firstname" name="firstname" placeholder="Enter First Name" required>
+            </section>
+            <section class="form-group">
+                <label for="lastname">Last Name</label>
+                <input type="text" id="lastname" name="lastname" placeholder="Enter Last Name" required>
+            </section>
+            <section class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="psw" placeholder="Enter Password" required>
+            </section>
+            {% csrf_token %}
+            <button class="btn btn-primary" type="submit">Sign Up</button>
+        </form>
+    </main>
+</body>
 </html>
