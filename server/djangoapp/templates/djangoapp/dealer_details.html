@@ -28,9 +28,9 @@
                 {% if review.sentiment == "positive" %}
                     <img class="card-img-left" src="{{MEDIA_URL}}/emoji/positive.png" style="width: 10%;">
                 {% elif review.sentiment == "negative" %}
-                    <img class="card-img-left" src="{{MEDIA_URL}}/emoji/neutral.png" style="width: 10%;">
-                {% else %}
                     <img class="card-img-left" src="{{MEDIA_URL}}/emoji/negative.png" style="width: 10%;">
+                {% else %}
+                    <img class="card-img-left" src="{{MEDIA_URL}}/emoji/neutral.png" style="width: 10%;">
                 {% endif %}    
             </h5>
             
