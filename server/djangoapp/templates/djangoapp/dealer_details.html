@@ -11,26 +11,38 @@
 
     <!--Add a nav bar here -->
     {% include './navbar.html' %}
+    <header class="d-flex justify-content-between align-items-center p-2">
+        <h1>Reviews for <strong>{{dealership_details.full_name}}</strong></h1>
+        
+        {% if user.is_authenticated %}
+        <div>
+            <a class="btn btn-primary" href="addreview">Add a review</a>
+        </div>
+        {% endif %}
+    </header>
     <!-- Add reviews as cards -->
+    <main class="card-columns p-2">
     {% for review in review_list %}
-    <article class="card w-25">
-        <h5 class="card-header">Featured</h5>
-        <section class="card-body">
-            <h5 class="card-title">Review {{forloop.counter0}} 
+        <article class="card">
+            <h5 class="card-header bg-transparent ">
                 {% if review.sentiment == "positive" %}
-                <span>&#x1F60D</span>
+                    <img class="card-img-left" src="{{MEDIA_URL}}/emoji/positive.png" style="width: 10%;">
                 {% elif review.sentiment == "negative" %}
-                <span>&#x1F61E</span>
+                    <img class="card-img-left" src="{{MEDIA_URL}}/emoji/neutral.png" style="width: 10%;">
                 {% else %}
-                <span>&#x1F610</span>
-                {% endif %}
+                    <img class="card-img-left" src="{{MEDIA_URL}}/emoji/negative.png" style="width: 10%;">
+                {% endif %}    
             </h5>
-            <h6 class="card-subtitle mb-2 text-muted">{{review.name}}</h6>
-            <p>{{review.review}}</p>
-        </section>
-    </article>
+            
+            <section class="card-body bg-light">
+                <h5 class="card-title">{{review.car_year}} {{review.car_make}} {{review.car_model}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{review.name}}</h6>
+                <p class="card-text">{{review.review}}</p>
+            </section>
+        </article>
     {% endfor %}
-    <a class="btn" href="addreview">Add a review</button>
+    </main>
+    
 </body>
 
 </html>

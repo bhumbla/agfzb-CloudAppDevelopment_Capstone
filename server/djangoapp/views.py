@@ -94,7 +94,7 @@ def get_dealer_details(request, dealer_id):
     if request.method == "GET":
         # Get dealership details
         dealership_url = "https://us-south.functions.appdomain.cloud/api/v1/web/Bhumbla_Coursera/dealership-package/get-dealership"
-        dealership = get_dealer_by_id_from_cf(dealership_url, dealer_id)
+        dealership = get_dealer_by_id_from_cf(dealership_url, dealer_id)[0]
         context["dealership_details"] = dealership
         
         # Get all reviews of dealership
