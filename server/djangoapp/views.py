@@ -116,21 +116,21 @@ def add_review(request, dealer_id):
     dealership = get_dealer_by_id_from_cf(dealership_url, dealer_id)[0]
     context["dealership_details"] = dealership
     if request.method == "POST":
-        #dealer_id = request.POST["dealership"]
         # Add new Review
         review_url = "https://us-south.functions.appdomain.cloud/api/v1/web/Bhumbla_Coursera/dealership-package/post-review"
         new_review= dict()
-        new_review["name"] = request.user.first_name + " " + request.user.last_name
-        new_review["review"] = request.POST["content"]
-        new_review["purchase"] = True if request.POST["purchasecheck"] == "on" else False
-        new_review["purchase_date"] = request.POST["purchasedate"]
-        car_details = CarModel.objects.get(id=request.POST["car"])
-        new_review["car_make"]= car_details.make.name
-        new_review["car_model"]= car_details.name
-        new_review["car_year"]= car_details.year.strftime("%Y")
         new_review["dealership"] = dealer_id
         new_review["time"] = datetime.utcnow().isoformat()
-        #print(new_review.values())
+        new_review["name"] = request.user.first_name + " " + request.user.last_name
+        new_review["review"] = request.POST["content"]
+        new_review["purchase"] = True if request.POST.get("purchasecheck") else False
+        if new_review["purchase"]:
+            new_review["purchase_date"] = request.POST.get("purchasedate")
+            car_details = CarModel.objects.get(id=request.POST.get("car"))
+            new_review["car_make"]= car_details.make.name
+            new_review["car_model"]= car_details.name
+            new_review["car_year"]= car_details.year.strftime("%Y")
+
         json_payload = dict()
         json_payload["review"] = new_review
         post_dealer_review(review_url, json_payload, dealerId=dealer_id)
