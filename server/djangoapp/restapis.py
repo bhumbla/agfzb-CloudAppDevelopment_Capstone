@@ -79,12 +79,12 @@ def get_dealer_reviews_from_cf(url, dealerId):
                 dealership=review["dealership"],
                 name=review["name"],
                 id=review["_id"],
-                purchase=review["purchase"],
-                purchase_date=review["purchase_date"],
                 review=review["review"],
-                car_make=review["car_make"],
-                car_model=review["car_model"],
-                car_year=review["car_year"],
+                purchase=review["purchase"],
+                purchase_date= review.get("purchase_date") if review.get("purchase_date") else '',
+                car_make=review.get("car_make") if review.get("car_make") else '',
+                car_model=review.get("car_model") if review.get("car_model") else '',
+                car_year=review.get("car_year") if review.get("car_year") else '',
                 sentiment=''
             )
             review_obj.sentiment = analyze_review_sentiments(review_obj.review)
