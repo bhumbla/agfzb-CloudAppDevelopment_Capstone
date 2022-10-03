@@ -1,10 +1,10 @@
   applications:
-  - name: djangoapp
+  - name: dealerships
     routes:
       - route: bhumbla.mybluemix.net
     memory: 128M
     buildpack: python_buildpack
-  - name: djangoapp-nginx
+  - name: dealerships-nginx
     routes:
       - route: bhumbla.mybluemix.net/static
     memory: 128M
