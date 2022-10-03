@@ -18,7 +18,7 @@
     </header>
     <main class="container">
         <!--Add review form here -->
-        <form action="{% url 'djangoapp:add_review' dealer_id=dealership_details.id %}" method="post">
+        <form action="{% url 'dealerships:add_review' dealer_id=dealership_details.id %}" method="post">
             <section class="form-group">
                 <label for="review">Enter the review content</label>
                 <textarea class="form-control" id="content" name="content" rows="2" required></textarea>

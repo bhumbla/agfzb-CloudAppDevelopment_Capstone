@@ -38,9 +38,9 @@ def login_request(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-        return HttpResponseRedirect(reverse(viewname="djangoapp:index"))
+        return HttpResponseRedirect(reverse(viewname="dealerships:index"))
     else:
-        return redirect("djangoapp:index")
+        return redirect("dealerships:index")
 
 # ...
 
@@ -51,7 +51,7 @@ def logout_request(request):
     # Logout user in the request
     logout(request)
     # Redirect user back to homepage
-    return redirect("djangoapp:index")
+    return redirect("dealerships:index")
 
 # Create a `registration_request` view to handle sign up request
 def registration_request(request):
@@ -75,7 +75,7 @@ def registration_request(request):
         if not user_exist:
             user = User.objects.create(username=username, first_name=first_name, last_name=last_name, password=password)
             login(request, user)
-            return HttpResponseRedirect(reverse(viewname="djangoapp:index"))
+            return HttpResponseRedirect(reverse(viewname="dealerships:index"))
         else:
             return render(request, "djangoapp/registration.html")
 
@@ -110,7 +110,7 @@ def get_dealer_details(request, dealer_id):
 def add_review(request, dealer_id):
     context = {}
     if request.user.is_authenticated is not True:
-        return redirect("djangoapp:dealer_details", dealer_id=dealer_id)
+        return redirect("dealerships:dealer_details", dealer_id=dealer_id)
     
     dealership_url = "https://us-south.functions.appdomain.cloud/api/v1/web/Bhumbla_Coursera/dealership-package/get-dealership"
     dealership = get_dealer_by_id_from_cf(dealership_url, dealer_id)[0]
@@ -134,7 +134,7 @@ def add_review(request, dealer_id):
         json_payload = dict()
         json_payload["review"] = new_review
         post_dealer_review(review_url, json_payload, dealerId=dealer_id)
-        return redirect("djangoapp:dealer_details", dealer_id=dealer_id)
+        return redirect("dealerships:dealer_details", dealer_id=dealer_id)
     else:
         # Get cars for the dealer
         cars = CarModel.objects.filter(dealer_id=dealer_id)

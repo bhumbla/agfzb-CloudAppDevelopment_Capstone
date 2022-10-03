@@ -1,23 +1,23 @@
 <header>
     <nav class="navbar navbar-dark bg-dark">
       <div class="navbar-header">
-          <a class="navbar-brand text-light" href="/djangoapp">Dealerships</a>
+          <a class="navbar-brand text-light" href="/dealerships">Dealerships</a>
       </div>
       <ul class="nav navbar-nav navbar-right">
           {% if user.is_authenticated %}
           <li>
               <a class="btn text-light" href="#">{{ user.first_name }} ({{ user.username }})</a>
-              <a class="btn text-danger" href="{% url 'djangoapp:logout' %}">Logout</a>
+              <a class="btn text-danger" href="{% url 'dealerships:logout' %}">Logout</a>
           </li>
           {% else %}
           <li>
-              <form class="form-inline" action="{% url 'djangoapp:login' %}" method="post">
+              <form class="form-inline" action="{% url 'dealerships:login' %}" method="post">
                   {% csrf_token %}
                   <div class="input-group">
                       <input type="text" class="form-control" placeholder="Username" name="username" >
                       <input type="password" class="form-control" placeholder="Password" name="psw" >
                       <button class="btn btn-primary" type="submit">Login</button>
-                      <a class="btn text-light" href="{% url 'djangoapp:registration' %}">Sign Up</a>
+                      <a class="btn text-light" href="{% url 'dealerships:registration' %}">Sign Up</a>
                   </div>
               </form>
           </li>
